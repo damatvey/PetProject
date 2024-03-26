@@ -5,10 +5,11 @@ import org.flywaydb.core.internal.util.CollectionsUtils;
 import org.flywaydb.core.internal.util.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.matvey.club.entity.Usr;
-import ru.matvey.club.exception.exception.EmptyFieldsException;
-import ru.matvey.club.exception.exception.NotFoundException;
-import ru.matvey.club.exception.exception.WeakPasswordException;
+import ru.matvey.club.exception.exceptions.EmptyFieldsException;
+import ru.matvey.club.exception.exceptions.NotFoundException;
+import ru.matvey.club.exception.exceptions.WeakPasswordException;
 import ru.matvey.club.repo.UsrRepo;
+import ru.matvey.club.rest.dto.EditUsrRequest;
 import ru.matvey.club.rest.dto.NewUsrRequest;
 import ru.matvey.club.rest.dto.UsrDto;
 import ru.matvey.club.service.UsrService;
@@ -86,6 +87,43 @@ public class UsrServiceImpl implements UsrService {
 
         Usr usr = usrFromDb.get();
 
+        return buildDto(usr);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        if (!usrRepo.existsById(id)){
+            throw new NotFoundException("Пользователь с id " + id + " не найден");
+        }
+        usrRepo.deleteById(id);
+    }
+
+    @Override
+    public UsrDto edit(Long id, EditUsrRequest request) {
+        Optional<Usr> usrFromDb = usrRepo.findById(id);
+        //В каждом репозитории есть метод findById
+
+        if(usrFromDb.isEmpty()){
+            throw new NotFoundException("Пользователь с id " + id + " не найден");
+        }
+
+        if(!StringUtils.hasText(request.getEmail()) || !StringUtils.hasText(request.getUsrname())){
+            throw new EmptyFieldsException("Некорректные поля в запросе");
+        }
+
+        Usr usr = usrFromDb.get();
+
+        usr.setHearts(request.getHearts());
+        usr.setEmail(request.getEmail());
+        usr.setUsrname(request.getUsrname());
+        usr.setAvatarUrl(request.getAvatarUrl());
+
+        usrRepo.save(usr);
+
+        return buildDto(usr);
+    }
+
+    private UsrDto buildDto(Usr usr) {
         return UsrDto.builder()
                 .email(usr.getEmail())
                 .avatarUrl(usr.getAvatarUrl())
@@ -94,4 +132,6 @@ public class UsrServiceImpl implements UsrService {
                 .reviewsCount(usr.getReviews().size())
                 .build();
     }
+
+
 }

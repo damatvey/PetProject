@@ -1,4 +1,4 @@
-package ru.matvey.club.exception.exception;
+package ru.matvey.club.exception.exceptions;
 
 import org.springframework.http.HttpStatus;
 

@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface UsrRepo extends JpaRepository<Usr, Long> {
+    //через UsrRepo работаем с базой данных
     Optional<Usr> findByUsrname(String usrname);
     //!!! возможно нужно поменять на User пока хз проверь будет ли работать
 }

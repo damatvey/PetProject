@@ -1,6 +1,5 @@
-package ru.matvey.club.exception.exception;
+package ru.matvey.club.exception.exceptions;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

@@ -16,7 +16,7 @@ import lombok.Setter;
 //отвечает за хранение общих полей для всех (в нашем случае только id)
 public class AbstractEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 }

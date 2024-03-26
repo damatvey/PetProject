@@ -1,4 +1,4 @@
-package ru.matvey.club.exception.exception;
+package ru.matvey.club.exception.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
