@@ -18,7 +18,6 @@ import java.util.List;
 public class UsrController {
 
     private final UsrService usrService;
-    //
 
     @GetMapping
     public ResponseEntity<List<UsrDto>> getAll(){
