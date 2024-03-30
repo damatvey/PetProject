@@ -5,8 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ReviewDto {
-    private Integer likesAmount;
+public class NewReviewRequest {
     private String reviewText;
-    private Long bookId; 
+    private Long bookId;
 }
